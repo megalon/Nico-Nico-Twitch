@@ -1,0 +1,26 @@
+{
+  "name": "nico-nico-twitch",
+  "version": "1.0.0",
+  "description": "Twitch IRC bot to interact with Nico Nico Twitch webpage",
+  "main": "bot.js",
+  "dependencies": {
+    "tmi.js": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megalon/Nico-Nico-Twitch.git"
+  },
+  "keywords": [
+    "twitch"
+  ],
+  "author": "megalon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/megalon/Nico-Nico-Twitch/issues"
+  },
+  "homepage": "https://github.com/megalon/Nico-Nico-Twitch#readme"
+}
