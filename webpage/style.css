@@ -10,7 +10,7 @@ html {
 
 @keyframes niconicoMovement {
   0% {
-    transform: translateX(1280px);
+    transform: translateX(1920px);
   }
   100% {
     transform: translateX(-4280px);
@@ -38,7 +38,7 @@ html {
 .message {
   position: absolute;
   white-space: nowrap;
-  font-size: 32px;
+  font-size: 48px;
   color: white;
 }
 

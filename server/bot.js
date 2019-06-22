@@ -12,11 +12,11 @@ const broadcast = data => {
 
 const opts = {
   identity: {
-    username: 'username',
-    password: 'ouath:enter-oauth-here!!!!!!!'
+    username: 'beatsabermods',
+    password: 'oauth:bc0v3vifbel926uj9n0pe9nhrol4l4'
   },
   channels: [
-    'channelname'
+    'beatsabermods'
   ]
 }
 
