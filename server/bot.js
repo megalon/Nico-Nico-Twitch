@@ -1,5 +1,6 @@
 const tmi = require('tmi.js')
 const WS = require('ws')
+const env = require('dotenv')
 
 const wss = new WS.Server({ port: 3000 })
 const broadcast = data => {
@@ -12,10 +13,10 @@ const broadcast = data => {
 
 const opts = {
   identity: {
-    username: 'username',
-    password: 'ouath:enter-oauth-here!!!!!!!'
+    username: process.env.USERNAME,
+    password: process.env.OAUTH
   },
-  channels: ['channelname']
+  channels: [process.env.CHANNEL]
 }
 
 const userList = []
