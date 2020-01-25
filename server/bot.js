@@ -1,6 +1,6 @@
 const tmi = require('tmi.js')
 const WS = require('ws')
-const env = require('dotenv')
+const env = require('dotenv').config()
 
 const wss = new WS.Server({ port: 3000 })
 const broadcast = data => {
