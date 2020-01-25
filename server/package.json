@@ -15,7 +15,8 @@
     "url": "git+https://github.com/megalon/Nico-Nico-Twitch.git"
   },
   "keywords": [
-    "twitch"
+    "twitch",
+    "niconico"
   ],
   "author": "megalon",
   "license": "ISC",

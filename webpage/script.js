@@ -9,29 +9,29 @@ const messagesDiv = document.getElementById('messages')
 wsTwitch.onmessage = function(event) {
   let eventData = JSON.parse(event.data)
 
-  if (eventData.text.startsWith("!")) return
+  if (eventData.text.startsWith('!')) return
 
   const fontColor = eventData.color
   const sanitizedText = eventData.text
 
-  const msgDiv = document.createElement("div")
-  const nameDiv = document.createElement("div")
-  const msgContentDiv = document.createElement("div")
+  const msgDiv = document.createElement('div')
+  const nameDiv = document.createElement('div')
+  const msgContentDiv = document.createElement('div')
 
   msgDiv.id = eventData.messageID
-  msgDiv.className += "message"
+  msgDiv.className += 'message'
   msgDiv.className += ` messageMovement${movementNum}`
 
-  nameDiv.className += "messageUsername"
-  msgContentDiv.className += "messageContent"
+  nameDiv.className += 'messageUsername'
+  msgContentDiv.className += 'messageContent'
 
   // Color the username, if the color exists
-  if (fontColor !== undefined && fontColor != null){
+  if (fontColor !== undefined && fontColor != null) {
     nameDiv.innerHTML = `<font color="${fontColor}">${eventData.displayName}</font>`
-	  msgContentDiv.innerText = `: ${sanitizedText}`
-	}else {
-	  msgContentDiv.innerText = `${eventData.displayName}: ${sanitizedText}`
-	}
+    msgContentDiv.innerText = `: ${sanitizedText}`
+  } else {
+    msgContentDiv.innerText = `${eventData.displayName}: ${sanitizedText}`
+  }
 
   msgDiv.style.top = Math.random() * 200
 
@@ -41,5 +41,7 @@ wsTwitch.onmessage = function(event) {
 
   movementNum = movementNum >= maxMovementNums ? 0 : movementNum + 1
 
-  setTimeout(function(){ document.getElementById(`${msgDiv.id}`).outerHTML = ""; }, 20000);
+  setTimeout(function() {
+    document.getElementById(`${msgDiv.id}`).outerHTML = ''
+  }, 20000)
 }

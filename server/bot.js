@@ -15,9 +15,7 @@ const opts = {
     username: 'username',
     password: 'ouath:enter-oauth-here!!!!!!!'
   },
-  channels: [
-    'channelname'
-  ]
+  channels: ['channelname']
 }
 
 const userList = []
@@ -29,8 +27,8 @@ client.on('connected', onConnectedHandler)
 
 client.connect()
 
-function onMessageHandler (target, context, msg, self) {
-  if (self) return 
+function onMessageHandler(target, context, msg, self) {
+  if (self) return
 
   const text = msg.trim()
 
@@ -43,17 +41,21 @@ function onMessageHandler (target, context, msg, self) {
   let nameColor = context.color
 
   if (nameColor === null) {
-    if (userList.some(e => {
-      if (e.name === username) {
-        nameColor = e.color
-        return true
-      } else return false
-    }))
+    if (
+      userList.some(e => {
+        if (e.name === username) {
+          nameColor = e.color
+          return true
+        } else return false
+      })
+    )
       console.log(`Color for ${username} found in userlist!`)
     else {
       nameColor = getRandomColor()
-      userList.push({'name': username, 'color':nameColor})
-      console.log(`Color not found for ${username}! Adding ${nameColor} to userlist!`)
+      userList.push({ name: username, color: nameColor })
+      console.log(
+        `Color not found for ${username}! Adding ${nameColor} to userlist!`
+      )
     }
   }
 
@@ -61,11 +63,11 @@ function onMessageHandler (target, context, msg, self) {
     messageID: messageID,
     displayName: displayName,
     color: nameColor,
-    text: text,
+    text: text
   })
 }
 
-function onConnectedHandler (addr, port) {
+function onConnectedHandler(addr, port) {
   console.log(`Connected to ${addr}:${port}`)
 }
 
@@ -94,10 +96,10 @@ function onConnectedHandler (addr, port) {
 */
 
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var randColor = '#';
+  var letters = '0123456789ABCDEF'
+  var randColor = '#'
   for (var i = 0; i < 6; i++) {
-    randColor += letters[Math.floor(Math.random() * 16)];
+    randColor += letters[Math.floor(Math.random() * 16)]
   }
-  return randColor;
+  return randColor
 }
