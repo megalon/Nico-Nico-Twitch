@@ -15,6 +15,8 @@ wsTwitch.onmessage = function(event) {
   const fontColor = eventData.color
   const sanitizedText = eventData.text
 
+  buildEmotesInString(context.emotes, sanitizedText)
+
   const msgDiv = document.createElement('div')
   const nameDiv = document.createElement('div')
   const msgContentDiv = document.createElement('div')
@@ -45,4 +47,44 @@ wsTwitch.onmessage = function(event) {
   setTimeout(function() {
     document.getElementById(`${msgDiv.id}`).outerHTML = ''
   }, 20000)
+}
+
+function buildEmotesInString(emotesObject, text) {
+  let emotes = []
+
+  // Built emotes array
+  for (let [key, value] of Object.entries(emotesObject)) {
+    for (let v of value) {
+      const indexes = v.split('-')
+      emotes.push({
+        emote: key,
+        startIndex: parseInt(indexes[0]),
+        endIndex: parseInt(indexes[1])
+      })
+    }
+  }
+
+  // Sort emotes from last to first
+  emotes.sort((a, b) => {
+    if (a.startIndex > b.startIndex) {
+      return -1
+    }
+    if (a.startIndex < b.startIndex) {
+      return 1
+    }
+    return 0
+  })
+  console.log(emotes)
+
+  // Replace text with emote number
+  let finalText = '' + text
+  console.log(finalText)
+  for (emote of emotes) {
+    console.log(emote)
+    finalText =
+      finalText.substring(0, emote.startIndex) +
+      emote.emote +
+      finalText.substring(emote.endIndex)
+  }
+  console.log(finalText)
 }
