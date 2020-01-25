@@ -20,7 +20,7 @@ Install the node `serve` package if you don't already have it: `yarn global add 
 ## Twitch bot (server)
 
 1. Rename the file `example.env` to `.env` and fill out the username, channel name, and oauth, then save the file.
-2. In the server folder, open a commandline window and run `npm install`
+2. In the server folder, open a commandline window and run `yarn`
 3. Then run `node .\bot.js`
 
 The bot will tell you if it connects to twitch.
