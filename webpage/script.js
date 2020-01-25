@@ -9,11 +9,15 @@ const messagesDiv = document.getElementById('messages')
 wsTwitch.onmessage = function(event) {
   const eventData = JSON.parse(event.data)
   const context = eventData.context
+  const fontColor = eventData.color
+  let text = eventData.text
 
+  // Ignore command messages
   if (eventData.text.startsWith('!')) return
 
-  const fontColor = eventData.color
-  let sanitizedText = eventData.text
+  // Ignore messages that contain any possible HTML tags
+  const regex = /<.*>/g
+  if (text.search(regex) >= 0) return
 
   const msgDiv = document.createElement('div')
   const nameDiv = document.createElement('div')
@@ -26,16 +30,17 @@ wsTwitch.onmessage = function(event) {
   nameDiv.className += 'messageUsername'
   msgContentDiv.className += 'messageContent'
 
+  // Add emote images to message, if emotes exist
   if (context.emotes !== null) {
-    sanitizedText = buildEmotesInString(context.emotes, sanitizedText)
+    text = insertEmotesIntoMessage(context.emotes, text)
   }
 
   // Color the username, if the color exists
   if (fontColor !== undefined && fontColor != null) {
     nameDiv.innerHTML = `<font color="${fontColor}">${context['display-name']}</font>`
-    msgContentDiv.innerHTML = `: ${sanitizedText}`
+    msgContentDiv.innerHTML = `: ${text}`
   } else {
-    msgContentDiv.innerHTML = `${context['display-name']}: ${sanitizedText}`
+    msgContentDiv.innerHTML = `${context['display-name']}: ${text}`
   }
 
   msgDiv.style.top = Math.random() * 200
@@ -51,10 +56,11 @@ wsTwitch.onmessage = function(event) {
   }, 20000)
 }
 
-function buildEmotesInString(emotesObject, text) {
+function insertEmotesIntoMessage(emotesObject, text) {
   let emotes = []
 
-  // Built emotes array
+  // Extract all emotes from emotes object,
+  // and store their information
   for (let [key, value] of Object.entries(emotesObject)) {
     for (let v of value) {
       const indexes = v.split('-')
@@ -77,19 +83,15 @@ function buildEmotesInString(emotesObject, text) {
     }
     return 0
   })
-  console.log(emotes)
 
-  // Replace text with emote number
-  let finalText = '' + text
-  console.log(finalText)
+  // Loop through the emotes and insert the images from back to front in the message string
+  let textAndEmotes = '' + text
   for (emote of emotes) {
-    console.log(emote)
-    finalText =
-      finalText.substring(0, emote.startIndex) +
+    textAndEmotes =
+      textAndEmotes.substring(0, emote.startIndex) +
       `<span><img src=${emote.url}></img></span>` +
-      finalText.substring(emote.endIndex + 1)
+      textAndEmotes.substring(emote.endIndex + 1)
   }
 
-  console.log(finalText)
-  return finalText
+  return textAndEmotes
 }
