@@ -13,9 +13,7 @@ wsTwitch.onmessage = function(event) {
   if (eventData.text.startsWith('!')) return
 
   const fontColor = eventData.color
-  const sanitizedText = eventData.text
-
-  buildEmotesInString(context.emotes, sanitizedText)
+  let sanitizedText = eventData.text
 
   const msgDiv = document.createElement('div')
   const nameDiv = document.createElement('div')
@@ -28,12 +26,16 @@ wsTwitch.onmessage = function(event) {
   nameDiv.className += 'messageUsername'
   msgContentDiv.className += 'messageContent'
 
+  if (context.emotes !== null) {
+    sanitizedText = buildEmotesInString(context.emotes, sanitizedText)
+  }
+
   // Color the username, if the color exists
   if (fontColor !== undefined && fontColor != null) {
     nameDiv.innerHTML = `<font color="${fontColor}">${context['display-name']}</font>`
-    msgContentDiv.innerText = `: ${sanitizedText}`
+    msgContentDiv.innerHTML = `: ${sanitizedText}`
   } else {
-    msgContentDiv.innerText = `${context['display-name']}: ${sanitizedText}`
+    msgContentDiv.innerHTML = `${context['display-name']}: ${sanitizedText}`
   }
 
   msgDiv.style.top = Math.random() * 200
@@ -58,6 +60,7 @@ function buildEmotesInString(emotesObject, text) {
       const indexes = v.split('-')
       emotes.push({
         emote: key,
+        url: `https://static-cdn.jtvnw.net/emoticons/v1/${key}/1.0`,
         startIndex: parseInt(indexes[0]),
         endIndex: parseInt(indexes[1])
       })
@@ -83,8 +86,10 @@ function buildEmotesInString(emotesObject, text) {
     console.log(emote)
     finalText =
       finalText.substring(0, emote.startIndex) +
-      emote.emote +
-      finalText.substring(emote.endIndex)
+      `<span><img src=${emote.url}></img></span>` +
+      finalText.substring(emote.endIndex + 1)
   }
+
   console.log(finalText)
+  return finalText
 }
