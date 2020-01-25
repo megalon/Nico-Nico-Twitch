@@ -32,13 +32,10 @@ function onMessageHandler(target, context, msg, self) {
   if (self) return
 
   const text = msg.trim()
-
   if (text[0] === '!') return undefined
 
   const username = context['username']
-
   let nameColor = context.color
-
   if (nameColor === null) {
     if (
       userList.some(e => {
@@ -47,9 +44,9 @@ function onMessageHandler(target, context, msg, self) {
           return true
         } else return false
       })
-    )
+    ) {
       console.log(`Color for ${username} found in userlist!`)
-    else {
+    } else {
       nameColor = getRandomColor()
       userList.push({ name: username, color: nameColor })
       console.log(
@@ -68,30 +65,6 @@ function onMessageHandler(target, context, msg, self) {
 function onConnectedHandler(addr, port) {
   console.log(`Connected to ${addr}:${port}`)
 }
-
-/*
-  Example context
-
-{ 
-  badges: { broadcaster: '1', subscriber: '0' },
-  color: null,
-  'display-name': 'MegalonTTV',
-  emotes: null,
-  flags: null,
-  id: 'b6a1bfa8-6fbc-4533-bba0-f9eaf67d78a5',
-  mod: false,
-  'room-id': '401283035',
-  subscriber: true,
-  'tmi-sent-ts': '1551207248515',
-  turbo: false,
-  'user-id': '401283035',
-  'user-type': null,
-  'emotes-raw': null,
-  'badges-raw': 'broadcaster/1,subscriber/0',
-  username: 'megalonttv',
-  'message-type': 'chat'
-}
-*/
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF'
