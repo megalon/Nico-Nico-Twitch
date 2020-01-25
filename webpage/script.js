@@ -7,7 +7,8 @@ let movementNum = 0
 const messagesDiv = document.getElementById('messages')
 
 wsTwitch.onmessage = function(event) {
-  let eventData = JSON.parse(event.data)
+  const eventData = JSON.parse(event.data)
+  const context = eventData.context
 
   if (eventData.text.startsWith('!')) return
 
@@ -18,7 +19,7 @@ wsTwitch.onmessage = function(event) {
   const nameDiv = document.createElement('div')
   const msgContentDiv = document.createElement('div')
 
-  msgDiv.id = eventData.messageID
+  msgDiv.id = context.messageID
   msgDiv.className += 'message'
   msgDiv.className += ` messageMovement${movementNum}`
 
@@ -27,10 +28,10 @@ wsTwitch.onmessage = function(event) {
 
   // Color the username, if the color exists
   if (fontColor !== undefined && fontColor != null) {
-    nameDiv.innerHTML = `<font color="${fontColor}">${eventData.displayName}</font>`
+    nameDiv.innerHTML = `<font color="${fontColor}">${context['display-name']}</font>`
     msgContentDiv.innerText = `: ${sanitizedText}`
   } else {
-    msgContentDiv.innerText = `${eventData.displayName}: ${sanitizedText}`
+    msgContentDiv.innerText = `${context['display-name']}: ${sanitizedText}`
   }
 
   msgDiv.style.top = Math.random() * 200

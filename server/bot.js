@@ -35,8 +35,6 @@ function onMessageHandler(target, context, msg, self) {
 
   if (text[0] === '!') return undefined
 
-  const displayName = context['display-name']
-  const messageID = context['id']
   const username = context['username']
 
   let nameColor = context.color
@@ -61,10 +59,9 @@ function onMessageHandler(target, context, msg, self) {
   }
 
   broadcast({
-    messageID: messageID,
-    displayName: displayName,
     color: nameColor,
-    text: text
+    text: text,
+    context: context
   })
 }
 
